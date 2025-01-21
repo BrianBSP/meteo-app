@@ -1,0 +1,9 @@
+.navbar-section {
+  background-color: #d3e9f4;
+  background: linear-gradient(90deg, #d3e9f4, #004aad);
+}
+
+.navbar-title {
+  font-weight: 700;
+  color: #004aad;
+}
