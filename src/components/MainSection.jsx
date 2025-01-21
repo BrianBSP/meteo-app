@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Badge, Col, Container, Row } from "react-bootstrap";
 import FormCitta from "./FormCitta";
-import DataOggi from "./DataOggi";
+/* import DataOggi from "./DataOggi"; */
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -57,9 +57,9 @@ const MainSection = () => {
         console.log(response);
 
         setPrevisioni({
-          temperatura: Math.round(response.main.temp),
-          max: Math.round(response.main.temp_max),
-          min: Math.round(response.main.temp_min),
+          temperatura: (Math.round(response.main.temp) - 273.15).toFixed(1),
+          max: (Math.round(response.main.temp_max) - 273.15).toFixed(1),
+          min: (Math.round(response.main.temp_min) - 273.15).toFixed(1),
           descrizione: response.weather[0].description,
           vento: response.wind.speed,
           umidita: response.main.humidity,
@@ -79,8 +79,57 @@ const MainSection = () => {
     fetchPrevisioni(latitudine, logitudine);
   }, []);
 
+  let previsioniClass;
+  switch (previsioni.icona) {
+    case "01d":
+      previsioniClass = "sun";
+      break;
+    case "01n":
+    case "02n":
+      previsioniClass = "night text-white";
+      break;
+    case "02d":
+      previsioniClass = "fewclouds";
+      break;
+    case "03d":
+    case "04d":
+      previsioniClass = "clouds";
+      break;
+    case "03n":
+    case "04n":
+      previsioniClass = "cloudsNight text-white";
+      break;
+    case "09d":
+    case "10d":
+      previsioniClass = "rain";
+      break;
+    case "09n":
+    case "10n":
+      previsioniClass = "rainNight text-white";
+      break;
+    case "11d":
+      previsioniClass = "thunder";
+      break;
+    case "11n":
+      previsioniClass = "thunerNight text-white";
+      break;
+    case "13d":
+      previsioniClass = "snow";
+      break;
+    case "13n":
+      previsioniClass = "snowNight text-white";
+      break;
+    case "50d":
+    case "50n":
+      previsioniClass = "mist";
+      break;
+    default:
+      previsioniClass = "default";
+      break;
+  }
+
   return (
-    <Container className="mt-3">
+    <Container className={`mt-3 ${previsioniClass}`}>
       <FormCitta cambiaCitta={fetchCitta} />
       <Container>
         {errore && (
@@ -90,14 +139,37 @@ const MainSection = () => {
             </Col>
           </Row>
         )}
-        <Row className="justify-content-center mt-4">
-          <Col xs={12} sm={8} md={6} lg={4} className="text-center">
-            <DataOggi />
-          </Col>
-        </Row>
-        <Row className="justify-content-center mt-3">
+
+        <Row className="justify-content-center mt-5">
           <Col xs={12} sm={8} md={6} lg={4} className="text-center">
             <h3>{previsioni.nome.toUpperCase()}</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center mt-3">
+            {previsioni.icona && (
+              <img
+                src={`https://openweathermap.org/img/wn/${previsioni.icona}.png`}
+                alt="iconaMeteo"
+                style={{ width: "80px", height: "80px" }}
+              />
+            )}
+          </Col>
+        </Row>
+        <Row className="justify-content-center align-items-center">
+          <Col md={7} style={{ fontSize: "100px" }} className="text-end">
+            {previsioni.temperatura}°C
+          </Col>
+          <Col>
+            <div className="mt-3">
+              <p>Min {previsioni.min}°C</p>
+              <p>Max {previsioni.max}°C</p>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center mt-3" style={{ fontSize: "50pxs" }}>
+            {previsioni.descrizione}
           </Col>
         </Row>
       </Container>

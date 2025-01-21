@@ -2,6 +2,7 @@
   width: 100%;
   background-color: #d3e9f4;
   background: linear-gradient(90deg, #d3e9f4, #004aad);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.151);
 }
 
 .navbar-title {
@@ -21,10 +22,15 @@
 .date-section {
   background: rgb(238, 174, 202);
   background: radial-gradient(circle, rgb(174, 195, 238) 0%, rgba(148, 187, 233, 1) 100%);
-  border: 1px solid #ccc; /* (Facoltativo) Per evidenziare il div */
+  border: 1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white; /* Colore del testo */
+  color: white;
   font-size: 18px;
+}
+h3 {
+  width: 100%;
+  font-size: 55px;
+  font-weight: 250;
 }

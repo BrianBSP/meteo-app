@@ -28,7 +28,9 @@ const FormCitta = ({ cambiaCitta }) => {
                 onChange={inserisciCitta}
               />
             </Form.Group>
-            <Button variant="dark">Cerca</Button>
+            <Button type="submit" variant="dark">
+              Cerca
+            </Button>
           </Form>
         </Col>
       </Row>
