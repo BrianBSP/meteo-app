@@ -19,15 +19,15 @@ const DataOggi = () => {
     ];
 
     const oggi = new Date();
-    const giornoSettimana = giorni[oggi.getDay()];
     const giorno = oggi.getDate();
+    const giornoSettimana = giorni[oggi.getDay()];
     const mese = mesi[oggi.getMonth()];
 
     return `${giornoSettimana}, ${giorno} ${mese}`;
   };
   return (
     <>
-      <Badge bg="primary">{dataDiOggi()}</Badge>
+      <Badge className="date-section">{dataDiOggi()}</Badge>
     </>
   );
 };

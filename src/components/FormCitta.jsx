@@ -3,6 +3,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 
 const FormCitta = ({ cambiaCitta }) => {
   const [citta, setCitta] = useState("");
+
   const inserisciCitta = (e) => {
     setCitta(e.target.value);
   };
@@ -11,6 +12,7 @@ const FormCitta = ({ cambiaCitta }) => {
     e.preventDefault();
     if (citta.trim()) {
       cambiaCitta(citta);
+      setCitta("");
     }
   };
   return (

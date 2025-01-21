@@ -1,9 +1,30 @@
 .navbar-section {
+  width: 100%;
   background-color: #d3e9f4;
   background: linear-gradient(90deg, #d3e9f4, #004aad);
 }
 
 .navbar-title {
-  font-weight: 700;
+  font-weight: 400;
   color: #004aad;
+  font-size: 2rem;
+  margin-left: 20px;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+.date-section {
+  background: rgb(238, 174, 202);
+  background: radial-gradient(circle, rgb(174, 195, 238) 0%, rgba(148, 187, 233, 1) 100%);
+  border: 1px solid #ccc; /* (Facoltativo) Per evidenziare il div */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Colore del testo */
+  font-size: 18px;
 }
