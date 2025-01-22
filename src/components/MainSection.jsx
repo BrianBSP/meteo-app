@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const MainSection = () => {
-  const [logitudine, setLongitudine] = useState(12.7441515);
+  const [longitudine, setLongitudine] = useState(12.7441515);
   const [latitudine, setLatitudine] = useState(43.9639933);
   const [errore, setErrore] = useState(null);
   const [previsioni, setPrevisioni] = useState({
@@ -52,16 +52,14 @@ const MainSection = () => {
   const fetchPrevisioni = async (lat, lon) => {
     try {
       const resp = await fetch(`${URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
-      console.log(resp);
 
       if (resp.ok) {
         const response = await resp.json();
-        console.log(response);
 
         setPrevisioni({
-          temperatura: (Math.round(response.main.temp) - 273.15).toFixed(1),
-          max: (Math.round(response.main.temp_max) - 273.15).toFixed(1),
-          min: (Math.round(response.main.temp_min) - 273.15).toFixed(1),
+          temperatura: (Math.round(response.main.temp) - 273.15).toFixed(0),
+          max: (Math.round(response.main.temp_max) - 273.15).toFixed(0),
+          min: (Math.round(response.main.temp_min) - 273.15).toFixed(0),
           descrizione: response.weather[0].description,
           vento: response.wind.speed,
           umidita: response.main.humidity,
@@ -78,7 +76,7 @@ const MainSection = () => {
   };
 
   useEffect(() => {
-    fetchPrevisioni(latitudine, logitudine);
+    fetchPrevisioni(latitudine, longitudine);
   }, []);
 
   let previsioniClass;
@@ -133,7 +131,7 @@ const MainSection = () => {
   const navigate = useNavigate();
 
   const handleDettaglio = () => {
-    navigate(`/detail/${previsioni.nome}`);
+    navigate(`/detail/${previsioni.nome}`, { state: { previsioni, latitudine, longitudine } });
   };
 
   return (
@@ -184,7 +182,7 @@ const MainSection = () => {
           <Col className="d-flex justify-content-end">
             <div className="d-flex align-items-center" onClick={handleDettaglio}>
               <span className="text-white">ULTERIORI DETTAGLI</span>
-              <ArrowRight style={{ width: "100px", height: "40px" }} />
+              <ArrowRight style={{ width: "100px", height: "40px", color: "white" }} />
             </div>
           </Col>
         </Row>
