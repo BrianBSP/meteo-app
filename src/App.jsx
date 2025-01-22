@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyNav from "./components/MyNav";
 import MainSection from "./components/MainSection";
+import Dettagli from "./components/Dettagli";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <MyNav />
         <Routes>
           <Route path="/" element={<MainSection />} />
+          <Route path="/detail/:citta" element={<Dettagli />} />
         </Routes>
       </BrowserRouter>
     </>

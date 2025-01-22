@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Badge, Col, Container, Row } from "react-bootstrap";
 import FormCitta from "./FormCitta";
+import { ArrowRight } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 /* import DataOggi from "./DataOggi"; */
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -128,6 +130,12 @@ const MainSection = () => {
       break;
   }
 
+  const navigate = useNavigate();
+
+  const handleDettaglio = () => {
+    navigate(`/detail/${previsioni.nome}`);
+  };
+
   return (
     <Container className={`mt-3 ${previsioniClass}`}>
       <FormCitta cambiaCitta={fetchCitta} />
@@ -168,8 +176,16 @@ const MainSection = () => {
           </Col>
         </Row>
         <Row>
-          <Col className="d-flex justify-content-center mt-3" style={{ fontSize: "50pxs" }}>
-            {previsioni.descrizione}
+          <Col className="d-flex justify-content-center mt-3">
+            <p style={{ fontSize: "80px" }}>{previsioni.descrizione}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-end">
+            <div className="d-flex align-items-center" onClick={handleDettaglio}>
+              <span className="text-white">ULTERIORI DETTAGLI</span>
+              <ArrowRight style={{ width: "100px", height: "40px" }} />
+            </div>
           </Col>
         </Row>
       </Container>
