@@ -9,7 +9,8 @@ const Dettagli = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [err, setErr] = useState(null);
-  const [forecast, setForecast] = useState(null);
+  const [forecast, setForecast] = useState([]);
+  console.log(forecast);
 
   const { previsioni, latitudine, longitudine, errore } = location.state || {};
 
@@ -24,6 +25,7 @@ const Dettagli = () => {
       const resp = await fetch(`${URL}/forecast?lat=${latitudine}&lon=${longitudine}&appid=${API_KEY}`);
       if (resp.ok) {
         const response = await resp.json();
+        console.log(response);
 
         const orari = ["00:00:00", "06:00:00", "12:00:00", "18:00:00"];
 
@@ -95,9 +97,33 @@ const Dettagli = () => {
       previsioniClass = "default";
       break;
   }
+  /*  const oggiGiorno = new Date(); */
+  const oggi = new Date().toISOString().slice(0, 10);
+  const domani = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const dopoDomani = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
+  console.log(oggi);
+  console.log(domani);
+  console.log(dopoDomani);
   console.log(forecast);
 
+  const previsioniOggi = forecast.filter((f) => f.dt_txt.startsWith(oggi));
+  const previsioniDomani = forecast.filter((f) => f.dt_txt.startsWith(domani));
+  const previsioniDopoDomani = forecast.filter((f) => f.dt_txt.startsWith(dopoDomani));
+
+  console.log(previsioniOggi);
+  console.log(previsioniDomani);
+  console.log(previsioniDopoDomani);
+
+  const renderPrevisioni = (previ) => {
+    return previ.map((f, index) => (
+      <div key={index}>
+        <p>Oraio: {f.dt_txt.slice(11, 16)}</p>
+        <p>Temperatura: {f.main.temp.toFixed(0)}</p>
+        <p>Vento: {f.wind.speed.toFixed(0)}</p>
+      </div>
+    ));
+  };
   return (
     <Container className={`mt-3 ${previsioniClass}`}>
       <Row>
@@ -150,8 +176,28 @@ const Dettagli = () => {
           </Row>
         )}
         {forecast && (
-          <Container>
-            <h4>Il meteo dei prossimi giorni a {previsioni.nome}</h4>
+          <Container className="my-5">
+            <h4 className="text-center mb-3">Il meteo dei prossimi giorni a {previsioni.nome}</h4>
+            <Row className="d-flex justify-content-center">
+              <Col xs={12} md={4} xl={4} className="d-flex justify-content-center">
+                <Card className="card-forecast">
+                  <h3 className="text-center">Oggi</h3>
+                  {renderPrevisioni(previsioniOggi)}
+                </Card>
+              </Col>
+              <Col xs={12} md={4} xl={4} className="d-flex justify-content-center">
+                <Card className="card-forecast">
+                  <h3 className="text-center">Domani</h3>
+                  {renderPrevisioni(previsioniDomani)}
+                </Card>
+              </Col>
+              <Col xs={12} md={4} xl={4} className="d-flex justify-content-center">
+                <Card className="card-forecast">
+                  <h3 className="text-center">Dopo Domani</h3>
+                  {renderPrevisioni(previsioniDopoDomani)}
+                </Card>
+              </Col>
+            </Row>
           </Container>
         )}
       </Row>

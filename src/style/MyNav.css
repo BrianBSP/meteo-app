@@ -34,3 +34,11 @@ h3 {
   font-size: 55px;
   font-weight: 250;
 }
+.card-detail-forecast {
+  width: 100%;
+  display: flex;
+}
+.card-forecast {
+  width: 100%;
+  border: 1px solid gray;
+}
